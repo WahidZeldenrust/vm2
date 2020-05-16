@@ -1,9 +1,4 @@
 ---
-- name: Make VM2 database
-  mysql_db:
-    name: vm2
-    state: present
-
 - name: Copy database dump file
   copy:
     src: templates/vm2.sql
