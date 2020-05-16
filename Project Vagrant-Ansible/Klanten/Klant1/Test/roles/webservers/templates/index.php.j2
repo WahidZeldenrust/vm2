@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ansible Application</title>
+	</head>
+
+	<body>
+		<a href="http://{{ ansible_default_ipv4.address }}/index.html">Homepage</a>
+		<h1>apache2, configured by Ansible</h1>
+		<p>If you can see this, Ansible succesfully installed apache2.</p>
+
+		<p>Running on {{ inventory_hostname }}</p>
+
+		<?php
+		echo(date("F d, Y h:i:s A", time()));
+		phpinfo();
+		?>
+	</body>
+</html>
