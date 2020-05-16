@@ -4,5 +4,11 @@
       pkg:
         - php
         - libapache2-mod-php
-      state: present  
+        - php-mysql
+      state: present
+
+    - name: Delete apache2 custom site
+      file:
+        path: /var/www/html/index.html
+        state: absent
 ...
