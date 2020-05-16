@@ -6,9 +6,9 @@
   apt:
     name: "{{ item }}"
   with_items:
-    - python-mysqldb
+    - python3-mysqldb
     - mysql-server
-    - mysql-python
+    - mysql-common
 
 - name: Start the MySQL service
   action: service name=mysql state=started
