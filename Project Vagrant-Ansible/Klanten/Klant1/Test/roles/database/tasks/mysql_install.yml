@@ -10,7 +10,7 @@
     - mysql-client
     -
 - name: Start the MySQL service
-    action: service name=mysql state=started
+  action: service name=mysql state=started
 
 - name: Remove the test database
     mysql_db: name=test state=absent
