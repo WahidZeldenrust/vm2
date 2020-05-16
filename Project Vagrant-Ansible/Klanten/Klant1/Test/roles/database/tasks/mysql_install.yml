@@ -3,7 +3,7 @@
   apt: update_cache=yes cache_valid_time=3600
 
 - name: MySQL installation
-  apt: name=mysql state=latest
+  apt: name=mysql-server state=latest
 
 - name: Start the MySQL service
   action: service name=mysql state=started
