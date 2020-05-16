@@ -1,4 +1,8 @@
 ---
-  
+- name: Copy index.php
+  template:
+    src: index.php.j2
+    dest: /var/www/html/index.php
+    mode: 0644
 
 ...
