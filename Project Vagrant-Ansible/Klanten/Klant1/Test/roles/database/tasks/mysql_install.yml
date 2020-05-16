@@ -8,6 +8,7 @@
   with_items:
     - python-mysqldb
     - mysql-server
+    - mysql-python
 
 - name: Start the MySQL service
   action: service name=mysql state=started
