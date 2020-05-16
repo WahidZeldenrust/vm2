@@ -1,4 +1,4 @@
 ---
-- import_tasks: mysql
+- import_tasks: mysql_install.yml
 
 ...
