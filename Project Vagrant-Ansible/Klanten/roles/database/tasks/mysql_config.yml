@@ -1,13 +1,4 @@
 ---
-- name: Copy MySQL configuration
-  template:
-    src: my.cnf.j2
-    dest: '/etc/mysql/my.cnf'
-    owner: root
-    group: root
-    mode: '0644'
-  notify: restart mysql
-
 - name: Copy database dump file
   copy:
     src: templates/vm2.sql
@@ -27,37 +18,16 @@
     line: bind-address = 0.0.0.0
   notify: restart mysql
 
-#- name: Copy .my.cnf
-#  template:
-#    src: '.my.cnf.j2'
-#    dest: '/root/.my.cnf'
-#    owner: root
-#    group: root
-#    mode: '0600'
-
-- name: Set root password
-  mysql_user:
-    name: root
-    host: '{{ item }}'
-    password: '{{ mysql_root_password }}'
-    state: present
-  with_items:
-    - '::1'
-    - '127.0.0.1'
-    - 'localhost'
-  no_log: true
-
 - name: Create web user
   mysql_user:
     name: web
     host: '{{ item }}'
-    password: '{{ mysql_web_password | mandatory }}'
-    priv: 'vm2.Klant:SELECT'
+    password: '{{ mysql_web_password }}'
   with_items:
     - '192.168.33.10'
-    - '10.0.1.11'
+    - '192.168.33.11'
     - 'localhost'
     - '127.0.0.1'
     - '::1'
-  no_log: true
+  no_log: false
 
