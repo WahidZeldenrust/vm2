@@ -18,3 +18,9 @@
     line: bind-address = 0.0.0.0
   notify: restart mysql
 
+- name: Create database user
+  mysql_user:
+    name: Wahid
+    password: Welkom01!
+    priv: '*.*:ALL'
+    state: present
