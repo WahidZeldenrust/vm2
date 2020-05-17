@@ -4,7 +4,7 @@
   become: true
 
   roles:
-    - common
+    - { role: ../../../roles/common }
 
 - name: Webserver deployment
   hosts: webservers
