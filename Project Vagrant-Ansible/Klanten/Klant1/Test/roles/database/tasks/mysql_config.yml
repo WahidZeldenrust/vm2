@@ -3,6 +3,7 @@
   copy:
     src: templates/vm2.sql
     dest: /tmp
+  notify: restart mysql
 
 #- name: Restore database
 #  mysql_db:
