@@ -11,13 +11,6 @@
     state: import
     target: /tmp/vm2.sql
 
-- name: Bind to all interfaces
-  lineinfile:
-    path: /etc/mysql/mysql.conf.d/mysqld.cnf
-    regexp: '^bind-address'
-    line: bind-address = 0.0.0.0
-  notify: restart mysql
-
 - name: Create web user
   mysql_user:
     name: webservers
@@ -30,4 +23,11 @@
     - '127.0.0.1'
     - '::1'
   no_log: false
+
+- name: Bind to all interfaces
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^bind-address'
+    line: bind-address = 0.0.0.0
+  notify: restart mysql
 
