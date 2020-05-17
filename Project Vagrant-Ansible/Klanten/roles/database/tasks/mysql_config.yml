@@ -20,9 +20,9 @@
 
 - name: Create web user
   mysql_user:
-    name: web
+    name: webservers
     host: '{{ item }}'
-    password: '{{ mysql_web_password }}'
+    password: '{{ mysql_webserver_password }}'
   with_items:
     - '192.168.33.10'
     - '192.168.33.11'
