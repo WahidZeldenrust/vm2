@@ -52,7 +52,7 @@
     name: web
     host: '{{ item }}'
     password: '{{ mysql_web_password | mandatory }}'
-    priv: 'vm2.test:SELECT'
+    priv: 'vm2.Klant:SELECT'
   with_items:
     - '192.168.33.10'
     - '10.0.1.11'
