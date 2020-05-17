@@ -11,5 +11,10 @@
     state: import
     target: /tmp/vm2.sql
 
-
+- name: Bind to all interfaces
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^bind-address'
+    line: bind-address = 0.0.0.0
+  notify: restart mysql
 
