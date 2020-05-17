@@ -27,13 +27,13 @@
     line: bind-address = 0.0.0.0
   notify: restart mysql
 
-- name: Copy .my.cnf
-  template:
-    src: '.my.cnf.j2'
-    dest: '/root/.my.cnf'
-    owner: root
-    group: root
-    mode: '0600'
+#- name: Copy .my.cnf
+#  template:
+#    src: '.my.cnf.j2'
+#    dest: '/root/.my.cnf'
+#    owner: root
+#    group: root
+#    mode: '0600'
 
 - name: Set root password
   mysql_user:
