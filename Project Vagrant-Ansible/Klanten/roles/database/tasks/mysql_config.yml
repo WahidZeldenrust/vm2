@@ -11,19 +11,6 @@
     state: import
     target: /tmp/vm2.sql
 
-- name: Create web user
-  mysql_user:
-    name: webservers
-    host: '{{ item }}'
-    password: '{{ mysql_web_password }}'
-  with_items:
-    - '192.168.33.10'
-    - '192.168.33.11'
-    - 'localhost'
-    - '127.0.0.1'
-    - '::1'
-  no_log: false
-
 - name: Bind to all interfaces
   lineinfile:
     path: /etc/mysql/mysql.conf.d/mysqld.cnf
