@@ -15,8 +15,6 @@ catch(PDOException $e)
 }
 ?>
 
-
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -25,10 +23,13 @@ catch(PDOException $e)
 
 	<body>
 		<a href="http://{{ ansible_default_ipv4.address }}/index.html">Homepage</a>
-		<h1>apache2, configured by Ansible</h1>
-		<p>If you can see this, Ansible succesfully installed apache2.</p>
-
 		<p>Running on {{ inventory_hostname }}</p>
+
+		<form action="" method="post">
+        Klantnaam: <input type="text" name="name"><br>
+        Klantnummer: <input type="text" name="email"><br>
+        <input type="submit">
+        </form>
 
 		<?php
 		echo(date("F d, Y h:i:s A", time()));
