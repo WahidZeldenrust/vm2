@@ -27,13 +27,16 @@ catch(PDOException $e)
 
 		<form action="" method="post">
         Klantnaam: <input type="text" name="name"><br>
-        Klantnummer: <input type="text" name="email"><br>
+        Klantnummer: <input type="text" name="klantID"><br>
         <input type="submit">
         </form>
 
 		<?php
-		echo(date("F d, Y h:i:s A", time()));
-		phpinfo();
+        $name = (filter_input(INPUT_POST, name, FILTER_SANITIZE_STRING));
+        $klantID = (filter_input(INPUT_POST, name, FILTER_SANITIZE_STRING));
+
+
+
 		?>
 	</body>
 </html>
