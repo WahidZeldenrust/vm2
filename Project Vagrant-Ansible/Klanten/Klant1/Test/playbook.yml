@@ -4,28 +4,28 @@
   become: true
 
   roles:
-    - ../../../roles/common
+    - common
 
 - name: Webserver deployment
   hosts: webservers
   become: true
 
   roles:
-    - ../../../roles/webservers
+    - webservers
 
 - name: loadbalancer deployment
   hosts: loadbalancer
   become: true
 
   roles:
-    - ../../../roles/loadbalancer
+    - loadbalancer
 
 - name: Databaseserver deployment
   hosts: database
   become: true
 
   roles:
-    - ../../../roles/database
+    - database
 
 
 ...
