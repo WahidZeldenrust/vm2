@@ -4,28 +4,28 @@
   become: true
 
   roles:
-    - { role: ../../../roles/common }
+    - ../../../roles/common
 
 - name: Webserver deployment
   hosts: webservers
   become: true
 
   roles:
-    - webservers
+    - ../../../roles/webservers
 
 - name: loadbalancer deployment
   hosts: loadbalancer
   become: true
 
   roles:
-    - loadbalancer
+    - ../../../roles/loadbalancer
 
 - name: Databaseserver deployment
   hosts: database
   become: true
 
   roles:
-    - database
+    - ../../../roles/database
 
 
 ...
