@@ -4,9 +4,9 @@
     src: templates/vm2.sql
     dest: /tmp
 
-- name: Restore database
-  mysql_db:
-    name: vm2
-    state: import
-    target: /tmp/vm2.sql
+#- name: Restore database
+#  mysql_db:
+#    name: vm2
+#    state: import
+#    target: /tmp/vm2.sql
 
