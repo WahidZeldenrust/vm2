@@ -22,7 +22,8 @@
   mysql_user:
     name: Wahid
     host: '{{ item }}'
-    password: Welkom01!
+    password: '*53B9B30AFBBE8B416B683FEB7588CDADE23D2E32'
+    encrypted: yes
     priv: '*.*:ALL'
     state: present
   with_items:
