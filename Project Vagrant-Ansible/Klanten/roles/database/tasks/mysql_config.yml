@@ -31,4 +31,4 @@
     src: root.cnf.j2
     dest: ~/.my.cnf mode=0600
   notify:
-    - Restart MySQL
+    - Restart mysql
