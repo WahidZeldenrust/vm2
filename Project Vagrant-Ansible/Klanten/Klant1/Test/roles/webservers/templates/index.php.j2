@@ -1,3 +1,30 @@
+<?php
+$host = "192.168.33.13";
+$db = "vm2";
+$user = "root";
+$pass = "";
+
+$dsn = "mysql:host=$host;dbname=$db";
+$options = [
+	PDO::ATTR_ERRMODE						=>	PDO::ERRMODE_EXCEPTION,
+	PDO::ATTR_DEFAULT_FETCH_MODE			=>	PDO::FETCH_ASSOC,
+	PDO::ATTR_EMULATE_PREPARES				=>	false,
+	PDO::MYSQL_ATTR_INIT_COMMAND			=>	'SET NAMES utf8',
+	PDO::MYSQL_ATTR_SSL_CA					=>	'',
+	PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT	=>	false,
+];
+try {
+	$pdo = new PDO($dsn, $user, $pass, $options);
+} catch (PDOException $e) {
+	// throw new PDOException($e->getMessage(), (int)$e->getCode());
+	echo $e;
+}
+?>
+
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 	<head>
