@@ -18,13 +18,13 @@
     line: bind-address = 0.0.0.0
   notify: restart mysql
 
-- name: Update MySQL root password for all root accounts
-  mysql_user: name=root host={{ item }} password={{ mysql_root_pass }} state=present
-  with_items:
-    - "{{ ansible_hostname }}"
-    - 127.0.0.1
-    - ::1
-    - localhost
+#- name: Update MySQL root password for all root accounts
+#  mysql_user: name=root host={{ item }} password={{ mysql_root_pass }} state=present
+#  with_items:
+#    - "{{ ansible_hostname }}"
+#    - 127.0.0.1
+#    - ::1
+#    - localhost
 
 - name: Copy the root credentials as .my.cnf file
   template:
