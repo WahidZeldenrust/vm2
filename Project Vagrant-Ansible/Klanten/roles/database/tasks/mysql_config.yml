@@ -1,4 +1,13 @@
 ---
+- name: Copy MySQL configuration
+  template:
+    src: my.cnf.j2
+    dest: '/etc/mysql/my.cnf'
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart mysql
+
 - name: Copy database dump file
   copy:
     src: templates/vm2.sql
@@ -18,17 +27,37 @@
     line: bind-address = 0.0.0.0
   notify: restart mysql
 
-#- name: Update MySQL root password for all root accounts
-#  mysql_user: name=root host={{ item }} password={{ mysql_root_pass }} state=present
-#  with_items:
-#    - "{{ ansible_hostname }}"
-#    - 127.0.0.1
-#    - ::1
-#    - localhost
+- name: Copy .my.cnf
+  template:
+    src: '.my.cnf.j2'
+    dest: '/root/.my.cnf'
+    owner: root
+    group: root
+    mode: '0600'
 
-#- name: Copy the root credentials as .my.cnf file
-#  template:
-#    src: root.cnf.j2
-#    dest: ~/.my.cnf mode=0600
-#  notify:
-#    - Restart mysql
+- name: Set root password
+  mysql_user:
+    name: root
+    host: '{{ item }}'
+    password: '{{ mysql_root_password | mandatory }}'
+    state: present
+  with_items:
+    - '::1'
+    - '127.0.0.1'
+    - 'localhost'
+  no_log: true
+
+- name: Create web user
+  mysql_user:
+    name: web
+    host: '{{ item }}'
+    password: '{{ mysql_web_password | mandatory }}'
+    priv: 'vm2.test:SELECT'
+  with_items:
+    - '10.0.1.11'
+    - '10.0.1.12'
+    - 'localhost'
+    - '127.0.0.1'
+    - '::1'
+  no_log: true
+
