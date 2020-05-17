@@ -54,8 +54,8 @@
     password: '{{ mysql_web_password | mandatory }}'
     priv: 'vm2.test:SELECT'
   with_items:
+    - '192.168.33.10'
     - '10.0.1.11'
-    - '10.0.1.12'
     - 'localhost'
     - '127.0.0.1'
     - '::1'
