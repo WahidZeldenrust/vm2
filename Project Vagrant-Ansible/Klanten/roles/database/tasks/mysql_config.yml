@@ -39,7 +39,7 @@
   mysql_user:
     name: root
     host: '{{ item }}'
-    password: '{{ mysql_root_password | mandatory }}'
+    password: '{{ mysql_root_password }}'
     state: present
   with_items:
     - '::1'
