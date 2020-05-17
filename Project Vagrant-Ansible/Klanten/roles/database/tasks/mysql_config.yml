@@ -5,11 +5,11 @@
     dest: /tmp
   notify: restart mysql
 
-- name: Restore database
-  mysql_db:
-    name: vm2
-    state: import
-    target: /tmp/vm2.sql
+#- name: Restore database
+#  mysql_db:
+#    name: vm2
+#    state: import
+#    target: /tmp/vm2.sql
 
 - name: Bind to all interfaces
   lineinfile:
