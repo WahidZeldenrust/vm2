@@ -21,6 +21,13 @@
 - name: Create database user
   mysql_user:
     name: Wahid
+    host: '{{ item }}'
     password: Welkom01!
     priv: '*.*:ALL'
     state: present
+  with_items:
+    - '192.168.33.10'
+    - '192.168.33.11'
+    - 'localhost'
+    - '127.0.0.1'
+    - '::1'
