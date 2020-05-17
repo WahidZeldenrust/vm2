@@ -26,9 +26,9 @@
 #    - ::1
 #    - localhost
 
-- name: Copy the root credentials as .my.cnf file
-  template:
-    src: root.cnf.j2
-    dest: ~/.my.cnf mode=0600
-  notify:
-    - Restart mysql
+#- name: Copy the root credentials as .my.cnf file
+#  template:
+#    src: root.cnf.j2
+#    dest: ~/.my.cnf mode=0600
+#  notify:
+#    - Restart mysql
