@@ -13,19 +13,20 @@
   roles:
     - webservers
 
-- name: loadbalancer deployment
-  hosts: loadbalancer
-  become: true
-
-  roles:
-    - loadbalancer
-
 - name: Databaseserver deployment
   hosts: database
   become: true
 
   roles:
     - database
+
+
+- name: loadbalancer deployment
+  hosts: loadbalancer
+  become: true
+
+  roles:
+    - loadbalancer
 
 
 ...
