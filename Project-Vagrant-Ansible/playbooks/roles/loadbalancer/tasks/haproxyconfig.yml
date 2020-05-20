@@ -1,8 +1,8 @@
 ---
 - name: Copy configuration
   copy:
-    src: templates/haproxy.cfg
-    dest: /etc/haproxy/haproxy.cfg
+    src: templates/haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg.j2
 
 - name: Restart HAProxy
   service:
