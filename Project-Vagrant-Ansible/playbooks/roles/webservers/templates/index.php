@@ -35,9 +35,14 @@ catch(PDOException $e)
         $name = (filter_input(INPUT_POST, name, FILTER_SANITIZE_STRING));
         $klantID = (filter_input(INPUT_POST, name, FILTER_SANITIZE_STRING));
 
+       try{
        $stmt = $conn->query("SELECT * FROM Klant");
-       while ($row = $stmt->fetch()) {
-           echo $row['KlantID']."<br />\n";
+              while ($row = $stmt->fetch()) {
+                  echo $row['KlantID']."<br />\n";
+       }catch(exception e){
+       echo e;
+       }
+
        }
 		?>
 	</body>
