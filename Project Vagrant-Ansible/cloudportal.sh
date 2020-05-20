@@ -6,4 +6,4 @@ printf "########################################################################
 cd Klanten/Klant1/Test || exit
 
 vagrant up
-ansible-playbook playbook.yml
+ansible-playbook /media/vagrant/vm2/Project Vagrant-Ansible/playbooks/playbook.yml
