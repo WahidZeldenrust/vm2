@@ -38,15 +38,8 @@ catch(PDOException $e)
 
         $result = $sth->fetchAll();
         foreach ($result as $value){
-        $storeArray = Array();
 
-         while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-             $storeArray[] =  $row['names'];
-         }
-
-         foreach ($storeArray as $value){
-         print $value;
-         }
+        print_r ($result);
 
         }
 
