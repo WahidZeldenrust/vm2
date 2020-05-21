@@ -38,8 +38,8 @@ catch(PDOException $e)
 
         $result = $sth->fetchAll();
 
-        for ($i = 1; $i < count($result); $i++) {
-            echo $i;
+        for ($i = 1; $i < sizeof($result); $i++) {
+            echo $result[$i];
         }
 
 
