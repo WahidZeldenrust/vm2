@@ -15,6 +15,6 @@
   - name: uncomment module php_pdo
       replace:
         path: /etc/php/7.0/apache2/php.ini
-        regexp: ';extension=php_pdo_mysql.dll'
-        replace: 'extension=php_pdo_mysql.dll'
+          regexp: ';extension=php_pdo_mysql.dll'
+          replace: 'extension=php_pdo_mysql.dll'
 ...
