@@ -37,7 +37,7 @@ catch(PDOException $e)
 
         $result = $conn->query("select KlantNaam from Klant")->fetchAll();
 
-        print $result;
+        print_r $result;
 
 
 		?>
