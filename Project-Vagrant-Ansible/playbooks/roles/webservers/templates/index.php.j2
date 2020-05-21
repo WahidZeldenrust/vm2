@@ -51,7 +51,7 @@ catch(PDOException $e)
 
                 try {
 
-                $stmt = $conn->prepare("INSERT INTO Klant (name, value) VALUES (:name, :value)");
+                $stmt = $conn->prepare("INSERT INTO Klant VALUES (:name, :value)");
                 $stmt->bindParam(':name', $name);
                 $stmt->bindParam(':value', $ID);
 
