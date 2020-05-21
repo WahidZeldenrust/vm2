@@ -32,13 +32,11 @@ catch(PDOException $e)
         </form>
 
 		<?php
-       try {
+        $sth = $conn->prepare('SELECT KlantNaam FROM Klant');
+        $sth->execute();
 
-           $st = $conn->prepare("SELECT * FROM Klant");
-       }
-       catch (PDOException $e){
-           echo $e->getMessage();
-       }
+        $result = $sth->fetchAll();
+        print_r($result);
 
 
 		?>
