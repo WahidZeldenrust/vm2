@@ -35,7 +35,7 @@ catch(PDOException $e)
         $name = (filter_input(INPUT_POST, name, FILTER_SANITIZE_STRING));
         $klantID = (filter_input(INPUT_POST, name, FILTER_SANITIZE_STRING));
 
-        print_r $conn->query("select * from Klant")->fetchAll();
+        print_r $conn->query("select * from Klant")->fetch();
 		?>
 	</body>
 </html>
