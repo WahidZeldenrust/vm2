@@ -28,15 +28,42 @@ catch(PDOException $e)
 		<form action="" method="post">
         Klantnaam: <input type="text" name="name"><br>
         Klantnummer: <input type="text" name="klantID"><br>
-        <input type="submit">
+        <input type="submit" name="submit">
         </form>
 
 		<?php
-        $sth = $conn->prepare('SELECT KlantNaam FROM Klant');
+
+        $sth = $conn->prepare("SELECT KlantNaam FROM Klant");
         $sth->execute();
 
         $result = $sth->fetchAll();
-        print_r($result);
+        foreach ($result as $value){
+        print $value;
+        }
+
+        if (isset($_POST['submit']))
+        {
+                $naam = (filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING));
+        		$ID = (filter_input(INPUT_POST, "ID", FILTER_SANITIZE_STRING));
+
+                insertDB($naam, $ID);
+        }
+
+        function insertDB($name, $id)
+        {
+            $query = "INSERT INTO Klant VALUES(?, ?)";
+            try{
+             $stmt = $conn->prepare($query);
+                    $stmt->execute([$name, $ID]);
+
+                }
+        }
+
+
+
+
+
+
 
 
 		?>
