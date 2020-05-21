@@ -32,12 +32,11 @@ catch(PDOException $e)
         </form>
 
 		<?php
-        $name = (filter_input(INPUT_POST, name, FILTER_SANITIZE_STRING));
-        $klantID = (filter_input(INPUT_POST, name, FILTER_SANITIZE_STRING));
+        $sth = $conn->prepare("SELECT KlantNaam FROM Klant");
+        $sth->execute();
 
-        $result = $conn->query("select KlantNaam from Klant")->fetchAll();
-
-        print_r $result;
+        $result = $sth->fetchAll();
+        print_r($result);
 
 
 		?>
