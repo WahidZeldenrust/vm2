@@ -46,24 +46,9 @@ catch(PDOException $e)
                 $naam = (filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING));
         		$ID = (filter_input(INPUT_POST, "ID", FILTER_SANITIZE_STRING));
 
-                insertDB($naam, $ID);
+                print $naam;
+                print $ID;
         }
-
-        function insertDB($name, $id)
-        {
-            $query = "INSERT INTO Klant VALUES(?, ?)";
-            try{
-             $stmt = $conn->prepare($query);
-                    $stmt->execute([$name, $ID]);
-
-                }
-        }
-
-
-
-
-
-
 
 
 		?>
