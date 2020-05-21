@@ -44,10 +44,22 @@ catch(PDOException $e)
         if (isset($_POST['submit']))
         {
                 $naam = (filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING));
-        		$ID = (filter_input(INPUT_POST, "ID", FILTER_SANITIZE_STRING));
+        		$ID = (filter_input(INPUT_POST, "klantID", FILTER_SANITIZE_STRING));
 
                 print $naam;
                 print $ID;
+
+                try {
+
+                $stmt = $conn->prepare("INSERT INTO Klant (name, value) VALUES (:name, :value)");
+                $stmt->bindParam(':name', $name);
+                $stmt->bindParam(':value', $ID);
+
+                $stmt->execute();
+
+                } catch(PDOException $e) {
+                  echo $e;
+                }
         }
 
 
