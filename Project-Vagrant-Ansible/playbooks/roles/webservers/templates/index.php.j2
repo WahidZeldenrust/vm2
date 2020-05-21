@@ -32,7 +32,7 @@ catch(PDOException $e)
         </form>
 
 		<?php
-        $sth = $conn->prepare("SELECT * FROM Klant");
+        $sth = $conn->prepare("SELECT KlantNaam, KlantID FROM Klant");
         $sth->execute();
 
         $result = $sth->fetchAll();
