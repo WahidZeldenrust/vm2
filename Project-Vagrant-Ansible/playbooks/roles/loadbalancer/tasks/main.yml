@@ -1,4 +1,4 @@
 ---
   - import_tasks: haproxy.yml
-#  - import_tasks: haproxyconfig.yml
+  - import_tasks: haproxyconfig.yml
 ...
