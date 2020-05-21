@@ -4,5 +4,6 @@
     src: index.php.j2
     dest: /var/www/html/index.php
     mode: 0644
+  action: service name=apache2 state=started
 
 ...
