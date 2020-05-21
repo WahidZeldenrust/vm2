@@ -37,9 +37,7 @@ catch(PDOException $e)
         $sth->execute();
 
         $result = $sth->fetchAll();
-        foreach ($result as $value){
-        print $value;
-        }
+        print_r ($result);
 
         if (isset($_POST['submit']))
         {
