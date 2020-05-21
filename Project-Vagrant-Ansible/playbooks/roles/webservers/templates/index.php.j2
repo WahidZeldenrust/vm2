@@ -37,15 +37,16 @@ catch(PDOException $e)
         $sth->execute();
 
         $result = $sth->fetchAll();
-        print_r ($result);
+        foreach ($result as $value){
+
+            print $value;
+
+        }
 
         if (isset($_POST['submit']))
         {
                 $naam = (filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING));
         		$ID = (filter_input(INPUT_POST, "klantID", FILTER_SANITIZE_STRING));
-
-                print $naam;
-                print $ID;
 
                 try {
 
