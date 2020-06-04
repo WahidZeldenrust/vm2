@@ -3,25 +3,6 @@ printf "########################################################################
 printf "# Welcome to the cloudportal of VM2 \n"
 printf "###########################################################################\n"
 
-
-function start() {
-    echo "Are you an existing customer?
-    (Y) I am (N) I am a new customer"
-
-read customer
-
-
-if [ $customer == "Y" ] || [ $customer == "y" ]
-then
-    existingCustomer
-else
-    newCustomer
-fi
-}
-
-start
-
-
 function newCustomer() {
     echo "Welcome to the cloudportal"
     existingCustomer
@@ -47,7 +28,6 @@ function existingCustomer() {
 
       vagrant up
       ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/playbook.yml
-
     fi
 
 }
@@ -56,6 +36,26 @@ function idError() {
     echo "CustomerID does not exist"
     exit
 }
+
+function start() {
+    echo "Are you an existing customer?
+    (Y) I am (N) I am a new customer"
+
+read customer
+
+
+if [ $customer == "Y" ] || [ $customer == "y" ]
+then
+    existingCustomer
+else
+    newCustomer
+fi
+}
+
+start
+
+
+
 
 #cd Klanten/Klant1/Test || exit
 #
