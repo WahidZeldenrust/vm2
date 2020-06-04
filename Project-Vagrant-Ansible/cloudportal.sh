@@ -12,6 +12,11 @@ function newCustomer() {
     newID=$( echo "$customerAmount + 1" | bc )
 
     mkdir $"Klant$newID"
+    cd $"Klant$newID"
+
+
+
+    createEnvironment
 
 }
 
@@ -22,6 +27,15 @@ function existingCustomer() {
 
     cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$ID/Test || idError
 
+    environment
+
+}
+
+function deleteEnvironment() {
+    echo "remove"
+}
+
+function createEnvironment() {
     echo "What would you like to make?
 (1) Test environment  (2) Production environment"
 
@@ -35,7 +49,6 @@ function existingCustomer() {
       vagrant up
       ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/playbook.yml
     fi
-
 }
 
 function idError() {
