@@ -6,7 +6,7 @@ printf "########################################################################
 
 function start() {
     echo "Are you an existing customer?
-        (Y) I am (N) I am a new customer"
+    (Y) I am (N) I am a new customer"
 
 read customer
 
@@ -24,6 +24,7 @@ start
 
 function newCustomer() {
     echo "Welcome to the cloudportal"
+    existingCustomer
 
 }
 
@@ -53,6 +54,7 @@ function existingCustomer() {
 
 function idError() {
     echo "CustomerID does not exist"
+    exit
 }
 
 #cd Klanten/Klant1/Test || exit
