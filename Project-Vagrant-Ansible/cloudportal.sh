@@ -21,11 +21,9 @@ function newCustomer() {
     clear
     echo "Uw klantnummer is "$newID
 
-    createEnvironment
+    environment
 
 }
-
-
 
 function existingCustomer() {
     echo "You are a customer"
@@ -33,8 +31,6 @@ function existingCustomer() {
     read ID
 
     cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$ID/Test || idError
-
-    environment
 
 }
 
@@ -44,11 +40,23 @@ function deleteEnvironment() {
 
 function testEnvironment() {
 
+
   cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/template_omgeving /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/Test
+
+  echo "What name would you like to give your vm?"
+#  read vm
 
 }
 
-function createEnvironment() {
+function productionEnvironment() {
+
+  cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/template_omgeving /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production
+
+  echo "What name would you like to give your vm?"
+#  read vm
+}
+
+function environment() {
     echo "What would you like to do?
 (1) Make a test environment  (2) Make a production environment  (3) Remove an environment"
 
@@ -57,10 +65,10 @@ function createEnvironment() {
     if [ $environment == 1 ]
     then
       testEnvironment
-    else
+    elif [ $environment == 2 ] 
+    then
+      productionEnvironment
 
-      vagrant up
-      ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/playbook.yml
     fi
 }
 
