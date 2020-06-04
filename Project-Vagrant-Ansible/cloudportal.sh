@@ -8,16 +8,16 @@ function newCustomer() {
     echo "Welcome to the cloudportal"
     cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten || exit
 
-    customerAmount="$(ls -1 | wc -l)"
+    customerAmount="$(ls -1)"
     newID=$( echo "$customerAmount + 1" | bc )
 
     mkdir $"Klant$newID"
     cd $"Klant$newID"
 
-
+    clear
+    echo "Uw klantnummer is "$newID
 
     createEnvironment
-
 }
 
 function existingCustomer() {
@@ -52,7 +52,7 @@ function createEnvironment() {
 }
 
 function idError() {
-    echo "CustomerID does not exist"
+    echo "A error has occured."
     exit
 }
 
