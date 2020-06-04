@@ -14,7 +14,7 @@ function existingCustomer() {
     echo "What is your customerID?"
     read ID
 
-    cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$ID || idError
+    cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$ID/Test || idError
 
     echo "What would you like to make?
     (1) Test environment  (2) Production environment"
