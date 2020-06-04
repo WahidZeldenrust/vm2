@@ -8,7 +8,7 @@ function newCustomer() {
     echo "Welcome to the cloudportal"
     cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten || exit
 
-    customerAmount="$(ls -1)"
+    customerAmount="$(ls -1 | wc -l)"
     newID=$( echo "$customerAmount + 1" | bc )
 
     mkdir $"Klant$newID"
