@@ -4,6 +4,8 @@ printf "# Welcome to the cloudportal of VM2 \n"
 printf "###########################################################################\n"
 
 
+cid=0
+
 function newCustomer() {
     echo "Welcome to the cloudportal"
     cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten || exit
@@ -14,11 +16,16 @@ function newCustomer() {
     mkdir $"Klant$newID"
     cd $"Klant$newID"
 
+    cid=$newID
+
     clear
     echo "Uw klantnummer is "$newID
 
+    createEnvironment
 
 }
+
+
 
 function existingCustomer() {
     echo "You are a customer"
@@ -35,15 +42,21 @@ function deleteEnvironment() {
     echo "remove"
 }
 
+function testEnvironment() {
+
+  cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/template_omgeving /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/Test
+
+}
+
 function createEnvironment() {
-    echo "What would you like to make?
-(1) Test environment  (2) Production environment"
+    echo "What would you like to do?
+(1) Make a test environment  (2) Make a production environment  (3) Remove an environment"
 
     read environment
 
     if [ $environment == 1 ]
     then
-      echo "test"
+      testEnvironment
     else
 
       vagrant up
