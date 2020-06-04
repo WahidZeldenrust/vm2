@@ -12,4 +12,4 @@ vagrant up
 #ssh-keyscan klant1-Test-loadbalancer 192.168.33.12 >> ~/.ssh/known_hosts
 #ssh-keyscan klant1-Test-database 192.168.33.13 >> ~/.ssh/known_hosts
 
-ansible-playbook ~/Documents/vm2/Project-Vagrant-Ansible/playbooks/playbook.yml
+ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/playbook.yml
