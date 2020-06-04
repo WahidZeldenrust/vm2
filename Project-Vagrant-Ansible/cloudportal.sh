@@ -17,7 +17,7 @@ function newCustomer() {
     clear
     echo "Uw klantnummer is "$newID
 
-    createEnvironment
+
 }
 
 function existingCustomer() {
