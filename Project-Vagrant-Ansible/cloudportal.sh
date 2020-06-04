@@ -8,7 +8,7 @@ echo "Are you an existing customer?
 (Y) I am (N) I am a new customer"
 
 read customer
-if [ $customer == "Y" ]
+if [ $customer == "Y" ] || [ $customer == "y" ]
 then
     echo "You are a customer"
 else
