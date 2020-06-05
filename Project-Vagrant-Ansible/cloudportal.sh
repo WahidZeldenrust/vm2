@@ -48,14 +48,56 @@ function rerollEnvironment() {
       vagrant reload
       vagrant up
 
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/ || error
+      rm -rf roles
+      cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/roles_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles
+
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/database/tasks || error
+      sed -i -e "s/{ID}/$cid/g" mysql_config.yml
+
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/loadbalancer/templates || error
+      sed -i -e "s/{ID}/$cid/g" haproxy.cfg.j2
+      sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" haproxy.cfg.j2
+
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/webservers/templates || error
+      sed -i -e "s/{ID}/$cid/g" index.php.j2
+
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/prod_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || error
+
+      sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" Vagrantfile
+      sed -i -e "s/{ID}/192.168.10$cid./g" Vagrantfile
+      sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" inventory.ini
+      sed -i -e "s/{ID}/$cid/g" inventory.ini
+
+      ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/playbook.yml
+
+      environment
+
+
     elif [ $reroll == 2 ]
     then
       cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
       vagrant reload
       vagrant up
+
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/test_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
+
+      sed -i -e "s/{CUSTOMER_ID}/klant$cid-test-webserver1/g" Vagrantfile
+      sed -i -e "s/{ID}/192.168.10$cid.2/g" Vagrantfile
+      sed -i -e "s/{CUSTOMER_ID}/klant$cid-test-webserver1/g" inventory.ini
+      sed -i -e "s/{ID}/$cid/g" inventory.ini
+
+      ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/webserver.yml
+
+  environment
+
     else
       error
     fi
+
+    environment
 }
 
 function updateEnvironment() {
@@ -71,6 +113,8 @@ function updateEnvironment() {
     then
         echo ""
     fi
+
+    environment
 }
 
 function environment() {
@@ -179,8 +223,6 @@ function productionEnvironment() {
 
   environment
 
-#  echo "What name would you like to give your vm?"
-#  read vm
 }
 
 function error() {
