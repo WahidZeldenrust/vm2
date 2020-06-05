@@ -47,7 +47,9 @@ function existingCustomer() {
     echo "What is your customerID?"
     read ID
 
-    cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$ID/Test || idError
+    cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$ID || error
+
+    environment
 
 }
 
@@ -63,18 +65,45 @@ function environment() {
     elif [ $environment == 2 ]
     then
       productionEnvironment
+    elif [ $environment == 3 ]
+    then
+      deleteEnvironment
+    else
+      error
 
     fi
 }
 
 function deleteEnvironment() {
-    echo "remove"
+
+
+    echo "Which environment would you like to remove?
+    (1) production (2) test"
+
+    read delete
+
+    if [ $delete == 1 ]
+    then
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || error
+      vagrant destroy -f
+      cd ..
+      rm -rf production
+    elif [ $delete == 2 ]
+    then
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
+      vagrant destroy -f
+      cd ..
+      rm -rf test
+    else
+      error
+    fi
 }
 
 function testEnvironment() {
 
 
   cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/test_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/Test
+  cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/Test || error
 
   echo "What name would you like to give your vm?"
 #  read vm
@@ -84,6 +113,7 @@ function testEnvironment() {
 function productionEnvironment() {
 
   cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/prod_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production
+  cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || error
 
   echo "What name would you like to give your vm?"
 #  read vm
@@ -91,7 +121,7 @@ function productionEnvironment() {
 
 
 
-function idError() {
+function error() {
     echo "A error has occured."
     exit
 }
