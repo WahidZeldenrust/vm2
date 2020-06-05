@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
   config.vm.define CUSTOMER_ID"-prod-webserver01" do |webserver|
     webserver.vm.box = "ubuntu/xenial32"
     webserver.vm.hostname = CUSTOMER_ID"-prod-webserver01"
-    webserver.vm.network "private_network", ip: {ID}"10"
+    webserver.vm.network "private_network", ip: {ID}10
     webserver.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
     webserver.vm.provider "virtualbox" do |vb|
       vb.memory = "512"
@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
   config.vm.define CUSTOMER_ID"-prod-webserver02" do |webserver2|
     webserver2.vm.box = "ubuntu/xenial32"
     webserver2.vm.hostname = CUSTOMER_ID"-prod-webserver02"
-    webserver2.vm.network "private_network", ip: {ID}"11"
+    webserver2.vm.network "private_network", ip: {ID}11
     webserver2.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
     webserver2.vm.provider "virtualbox" do |vb|
       vb.memory = "512"
@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
   config.vm.define CUSTOMER_ID"-prod-loadbalancer" do |loadbalancer|
     loadbalancer.vm.box = "ubuntu/xenial32"
     loadbalancer.vm.hostname = CUSTOMER_ID"-prod-loadbalancer"
-    loadbalancer.vm.network "private_network", ip: {ID}"12"
+    loadbalancer.vm.network "private_network", ip: {ID}12
     loadbalancer.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
     loadbalancer.vm.provider "virtualbox" do |vb|
       vb.memory = "512"
@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
   config.vm.define CUSTOMER_ID"-prod-database" do |db|
       db.vm.box = "ubuntu/xenial32"
       db.vm.hostname = CUSTOMER_ID"-prod-database"
-      db.vm.network "private_network", ip: {ID}"13"
+      db.vm.network "private_network", ip: {ID}13
       db.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
       db.vm.provider "virtualbox" do |vb|
         vb.memory = "512"
