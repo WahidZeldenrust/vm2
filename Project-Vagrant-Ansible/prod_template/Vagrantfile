@@ -7,9 +7,9 @@
 # you're doing.
 
 CUSTWEB="{CUSTOMER_ID}-prod-webserver01"
-CUSTWEB2="{CUSTOMER_ID}-prod-webserver01"
-CUSTLB="{CUSTOMER_ID}-prod-webserver01"
-CUSTDB="{CUSTOMER_ID}-prod-webserver01"
+CUSTWEB2="{CUSTOMER_ID}-prod-webserver02"
+CUSTLB="{CUSTOMER_ID}-prod-loadbalancer"
+CUSTDB="{CUSTOMER_ID}-prod-database"
 WEB="{ID}10"
 WEB2="{ID}11"
 LB="{ID}12"
