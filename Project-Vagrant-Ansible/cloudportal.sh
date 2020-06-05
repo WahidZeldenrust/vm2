@@ -95,7 +95,7 @@ function testEnvironment() {
 
   vagrant up
 
-  ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/playbook.yml
+  ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/webserver.yml
 
   environment
 
