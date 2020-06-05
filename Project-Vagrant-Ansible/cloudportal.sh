@@ -103,15 +103,25 @@ function testEnvironment() {
 
   environment
 
-#  echo "What name would you like to give your vm?"
-#  read vm
-
 }
 
 function productionEnvironment() {
 
+  cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/database/tasks || error
+  sed -i -e "s/{ID}/$cid/g" mysql_config.yml
+
+  cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/loadbalancer/templates || error
+  sed -i -e "s/{ID}/$cid/g" haproxy.cfg.j2
+  sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" haproxy.cfg.j2
+
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/prod_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || error
+
+  sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" Vagrantfile
+  sed -i -e "s/{ID}/192.168.10$cid./g" Vagrantfile
+  sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" inventory.ini
+  sed -i -e "s/{ID}/$cid/g" inventory.ini
+
 
   vagrant up
 

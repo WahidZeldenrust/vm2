@@ -41,6 +41,6 @@ frontend firstbalance
 
 backend webservers
         balance roundrobin
-        server klant1-Test-webserver01 192.168.33.10:80 check
-        server klant2-Test-webserver02 192.168.33.11:80 check
+        server {CUSTOMER_ID}-prod-webserver01 192.168.10{ID}.10:80 check
+        server {CUSTOMER_ID}-prod-webserver02 192.168.10{ID}.11:80 check
         option httpchk
