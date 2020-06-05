@@ -1,0 +1,16 @@
+---
+- name: Common
+  hosts: all
+  become: true
+
+  roles:
+    - common
+
+- name: Webserver deployment
+  hosts: webservers
+  become: true
+
+  roles:
+    - webservers
+
+...
