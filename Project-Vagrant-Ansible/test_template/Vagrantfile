@@ -5,20 +5,24 @@
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
+
+CUSTOMER_NAME="{CUSTOMER_NAME}"
+CUSTOMER_ID="{CUSTOMER_ID}"
+
 Vagrant.configure("2") do |config|
 
-  config.ssh.insert_key = false
+    config.ssh.insert_key = false
     config.ssh.private_key_path = ["~/.ssh/id_rsa","~/.vagrant.d/insecure_private_key"]
 
-    config.vm.define "klant1-Test-webserver01" do |webserver|
+    config.vm.define CUSTOMER_ID do |webserver|
       webserver.vm.box = "ubuntu/xenial32"
-      webserver.vm.hostname = "klant1-Test-webserver01"
+      webserver.vm.hostname = CUSTOMER_ID
       webserver.vm.network "private_network", ip: "192.168.100.2"
       webserver.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
       webserver.vm.provider "virtualbox" do |vb|
         vb.memory = "512"
         vb.gui = false
-        vb.name = "klant1-Test-webserver01"
+        vb.name = CUSTOMER_ID
       end
     end
 
