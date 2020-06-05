@@ -97,6 +97,8 @@ function testEnvironment() {
 
   ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/playbook.yml
 
+  environment
+
 #  echo "What name would you like to give your vm?"
 #  read vm
 
@@ -110,6 +112,8 @@ function productionEnvironment() {
   vagrant up
 
   ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/playbook.yml
+
+  environment
 
 #  echo "What name would you like to give your vm?"
 #  read vm
