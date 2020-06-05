@@ -30,6 +30,7 @@ function existingCustomer() {
     read ID
 
     cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$ID || error
+    cid=$ID
 
     environment
 
