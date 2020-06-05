@@ -114,6 +114,9 @@ function productionEnvironment() {
   sed -i -e "s/{ID}/$cid/g" haproxy.cfg.j2
   sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" haproxy.cfg.j2
 
+  cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/webservers/templates || error
+  sed -i -e "s/{ID}/$cid/g" index.php.j2
+
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/prod_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || error
 
