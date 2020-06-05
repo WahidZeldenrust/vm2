@@ -93,7 +93,11 @@ function testEnvironment() {
   cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/test_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
 
-  echo "What name would you like to give your vm?"
+  vagrant up
+
+  ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/playbook.yml
+
+#  echo "What name would you like to give your vm?"
 #  read vm
 
 }
