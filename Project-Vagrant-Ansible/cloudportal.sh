@@ -6,23 +6,6 @@ printf "########################################################################
 
 cid=0
 
-function start() {
-    echo "Are you an existing customer?
-(Y) I am (N) I am a new customer"
-
-read customer
-
-
-if [ $customer == "Y" ] || [ $customer == "y" ]
-then
-    existingCustomer
-else
-    newCustomer
-fi
-}
-
-start
-
 function newCustomer() {
     echo "Welcome to the cloudportal"
     cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten || exit
@@ -39,7 +22,6 @@ function newCustomer() {
     echo "Uw klantnummer is "$newID
 
     environment
-
 }
 
 function existingCustomer() {
@@ -73,6 +55,7 @@ function environment() {
 
     fi
 }
+
 
 function deleteEnvironment() {
 
@@ -119,12 +102,40 @@ function productionEnvironment() {
 #  read vm
 }
 
-
-
 function error() {
     echo "A error has occured."
     exit
 }
+
+function start() {
+    echo "Are you an existing customer?
+(Y) I am (N) I am a new customer"
+
+read customer
+
+
+if [ $customer == "Y" ] || [ $customer == "y" ]
+then
+    existingCustomer
+else
+    newCustomer
+fi
+}
+
+start
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
