@@ -93,6 +93,7 @@ function testEnvironment() {
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
 
   sed -i -e "s/{CUSTOMER_ID}/klant$cid-test-webserver1/g" Vagrantfile
+  sed -i -e "s/{CUSTOMER_ID}/klant$cid-test-webserver1/g" inventory.ini
 
   vagrant up
 
