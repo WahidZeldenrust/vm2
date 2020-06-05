@@ -56,7 +56,6 @@ function environment() {
       exit
     else
       error
-
     fi
 }
 
