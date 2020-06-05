@@ -36,9 +36,46 @@ function existingCustomer() {
 
 }
 
+function rerollEnvironment() {
+    echo "Which environment would you like to reroll?
+    (1) production (2) test"
+
+    read reroll
+
+    if [ $reroll == 1 ]
+    then
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || error
+      vagrant reload
+      vagrant up
+
+    elif [ $reroll == 2 ]
+    then
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
+      vagrant reload
+      vagrant up
+    else
+      error
+    fi
+}
+
+function updateEnvironment() {
+    echo "Which environment would you like to reconfigure?
+    (1) production (2) test"
+
+    read reconfigure
+
+    if [ $reconfigure == 1 ]
+    then
+        echo ""
+    elif [ $reconfigure == 2 ]
+    then
+        echo ""
+    fi
+}
+
 function environment() {
     echo "What would you like to do?
-(1) Make a test environment  (2) Make a production environment  (3) Remove an environment  (4) Quit"
+(1) Make a test environment  (2) Make a production environment  (3) Remove an environment  (4) Reroll an environment (5) Update an environment (6) Quit"
 
     read environment
 
@@ -52,6 +89,12 @@ function environment() {
     then
       deleteEnvironment
     elif [ $environment == 4 ]
+    then
+      rerollEnvironment
+    elif [ $environment == 5 ]
+    then
+      updateEnvironment
+    elif [ $environment == 6 ]
     then
       exit
     else
@@ -161,29 +204,3 @@ fi
 }
 
 start
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#cd Klanten/Klant1/test || exit
-#
-#vagrant up
-#
-#
-#
-#ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/playbook.yml
