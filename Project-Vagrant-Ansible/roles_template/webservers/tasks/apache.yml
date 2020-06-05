@@ -1,0 +1,13 @@
+---
+  - name: Apache installation
+    apt: name=apache2 state=latest
+
+  - name: State of the Apache service
+    service: name=apache2 state=started
+
+  - name: Ufw rule apache2
+    ufw:
+      rule: allow
+      port: '80' 
+
+...

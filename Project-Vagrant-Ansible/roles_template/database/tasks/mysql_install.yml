@@ -1,0 +1,16 @@
+---
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: MySQL installation
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - python3-mysqldb
+    - mysql-server
+    - mysql-common
+
+- name: Start the MySQL service
+  action: service name=mysql state=started
+
+...

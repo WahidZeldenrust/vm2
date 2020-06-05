@@ -1,0 +1,12 @@
+---
+
+#- name: Install ntp
+#  apt:
+#    name: ntp
+#    state: present
+#    update_cache: yes
+#  tags: ntp
+#
+#- name: Enable ufw
+#  ufw:
+#    state: enabled

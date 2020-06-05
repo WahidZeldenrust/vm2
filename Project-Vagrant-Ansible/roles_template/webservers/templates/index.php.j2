@@ -1,0 +1,67 @@
+<?php
+$servername = "192.168.10{ID}.13";
+$username = "Wahid";
+$password = "Welkom01!";
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=VM2", $username, $password);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully to the database";
+}
+catch(PDOException $e)
+{
+    echo "Connection failed: " . $e->getMessage();
+}
+?>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ansible Application</title>
+	</head>
+
+	<body>
+		<a href="http://{{ ansible_default_ipv4.address }}/index.html"></a>
+		<p>Running on {{ inventory_hostname }}</p>
+
+		<form action="" method="post">
+        Klantnaam: <input type="text" name="name"><br>
+        Klantnummer: <input type="text" name="klantID"><br>
+        <input type="submit" name="submit">
+        </form>
+
+		<?php
+
+        $sth = $conn->prepare("SELECT KlantNaam FROM Klant");
+        $sth->execute();
+
+        $result = $sth->fetchAll();
+
+        print_r ($result);
+
+
+
+
+        if (isset($_POST['submit']))
+        {
+                $naam = (filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING));
+        		$ID = (filter_input(INPUT_POST, "klantID", FILTER_SANITIZE_STRING));
+
+                try {
+
+                $stmt = $conn->prepare("INSERT INTO Klant VALUES (:value, :naam)");
+                $stmt->bindParam(':naam', $naam);
+                $stmt->bindParam(':value', $ID);
+
+                $stmt->execute();
+
+                } catch(PDOException $e) {
+                  echo $e;
+                }
+        }
+
+
+		?>
+	</body>
+</html>

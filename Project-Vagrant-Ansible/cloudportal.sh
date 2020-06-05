@@ -107,6 +107,10 @@ function testEnvironment() {
 
 function productionEnvironment() {
 
+  cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/ || error
+  rm -rf roles
+  cp /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles_template /roles
+
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/database/tasks || error
   sed -i -e "s/{ID}/$cid/g" mysql_config.yml
 

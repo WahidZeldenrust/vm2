@@ -1,0 +1,16 @@
+---
+- name: Copy index.php
+  template:
+    src: index.php.j2
+    dest: /var/www/html/index.php
+    mode: 0644
+  notify:
+    - restart apache2
+
+- name: Restart apache service.
+  systemd:
+    name: apache2
+    daemon_reload: yes
+    state: restarted
+
+...

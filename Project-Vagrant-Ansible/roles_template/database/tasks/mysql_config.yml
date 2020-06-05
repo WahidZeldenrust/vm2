@@ -1,0 +1,34 @@
+---
+- name: Copy database dump file
+  copy:
+    src: templates/vm2.sql
+    dest: /tmp
+  notify: restart mysql
+
+- name: Restore database
+  mysql_db:
+    name: vm2
+    state: import
+    target: /tmp/vm2.sql
+
+- name: Bind to all interfaces
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^bind-address'
+    line: bind-address = 0.0.0.0
+  notify: restart mysql
+
+- name: Create database user
+  mysql_user:
+    name: Wahid
+    host: '{{ item }}'
+    password: '*53B9B30AFBBE8B416B683FEB7588CDADE23D2E32'
+    encrypted: yes
+    priv: '*.*:ALL'
+    state: present
+  with_items:
+    - '192.168.10{ID}.10'
+    - '192.168.10{ID}.11'
+    - 'localhost'
+    - '127.0.0.1'
+    - '::1'
