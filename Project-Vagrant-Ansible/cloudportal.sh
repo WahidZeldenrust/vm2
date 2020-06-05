@@ -103,7 +103,11 @@ function productionEnvironment() {
   cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/prod_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || error
 
-  echo "What name would you like to give your vm?"
+  vagrant up
+
+  ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/playbook.yml
+
+#  echo "What name would you like to give your vm?"
 #  read vm
 }
 
