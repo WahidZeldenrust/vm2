@@ -38,7 +38,7 @@ function existingCustomer() {
 
 function environment() {
     echo "What would you like to do?
-(1) Make a test environment  (2) Make a production environment  (3) Remove an environment"
+(1) Make a test environment  (2) Make a production environment  (3) Remove an environment  (4) Quit"
 
     read environment
 
@@ -51,6 +51,9 @@ function environment() {
     elif [ $environment == 3 ]
     then
       deleteEnvironment
+    elif [ $environment == 4 ]
+    then
+      exit
     else
       error
 
@@ -81,13 +84,15 @@ function deleteEnvironment() {
     else
       error
     fi
+
+    environment
 }
 
 function testEnvironment() {
 
 
-  cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/test_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/Test
-  cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/Test || error
+  cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/test_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test
+  cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
 
   echo "What name would you like to give your vm?"
 #  read vm
@@ -143,7 +148,7 @@ start
 
 
 
-#cd Klanten/Klant1/Test || exit
+#cd Klanten/Klant1/test || exit
 #
 #vagrant up
 #
