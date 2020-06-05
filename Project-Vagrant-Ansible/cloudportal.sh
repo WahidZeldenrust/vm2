@@ -95,6 +95,8 @@ function testEnvironment() {
 
   vagrant up
 
+  ssh-keyscan klant$cid-Test-webserver01 192.168.100.2 >> ~/.ssh/known_hosts
+
   ansible-playbook /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/playbook.yml
 
   environment
