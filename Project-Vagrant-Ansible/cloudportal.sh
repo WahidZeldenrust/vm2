@@ -74,7 +74,7 @@ function deleteEnvironment() {
 function testEnvironment() {
 
 
-  cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/template_omgeving /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/Test
+  cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/test_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/Test
 
   echo "What name would you like to give your vm?"
 #  read vm
@@ -83,7 +83,7 @@ function testEnvironment() {
 
 function productionEnvironment() {
 
-  cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/template_omgeving /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production
+  cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/prod_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production
 
   echo "What name would you like to give your vm?"
 #  read vm
