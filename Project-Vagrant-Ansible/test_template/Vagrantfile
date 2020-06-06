@@ -8,6 +8,7 @@
 
 CUSTOMER="{ID}"
 CUSTOMER_ID="{CUSTOMER_ID}"
+RAM="{RAM}"
 
 Vagrant.configure("2") do |config|
 
@@ -20,7 +21,7 @@ Vagrant.configure("2") do |config|
       webserver.vm.network "private_network", ip: CUSTOMER
       webserver.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
       webserver.vm.provider "virtualbox" do |vb|
-        vb.memory = "512"
+        vb.memory = RAM
         vb.gui = false
         vb.name = CUSTOMER_ID
       end

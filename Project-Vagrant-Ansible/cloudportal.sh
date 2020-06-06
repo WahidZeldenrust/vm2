@@ -29,7 +29,7 @@ function existingCustomer() {
     echo "What is your customerID?"
     read ID
 
-    cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$ID || echo "This customerID does not exist" | exit
+    cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$ID || errorAccount
     cid=$ID
 
     environment
@@ -112,9 +112,31 @@ function updateEnvironment() {
 
     if [ $reconfigure == 1 ]
     then
-        echo ""
+        cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || errorConfig
+        echo "What would you like to edit?
+        (1) VM name (2) Ram"
+        read edit
+
+        if [ $edit == 1 ]
+        then
+          echo "How much ram would you like to give in mb?"
+          read answer
+
+          if [ $answer -lt 1024 ]
+          then
+            vagrant halt
+            sed -i -e "s/{RAM}/$answer/g" Vagrantfile
+            vagrant reload
+          else
+            echo "Number must be lower than 1024"
+
+            environment
+          fi
+        fi
+
     elif [ $reconfigure == 2 ]
     then
+        cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || errorConfig
         echo ""
     fi
 
@@ -191,6 +213,7 @@ function testEnvironment() {
   sed -i -e "s/{ID}/192.168.10$cid.2/g" Vagrantfile
   sed -i -e "s/{CUSTOMER_ID}/klant$cid-test-webserver1/g" inventory.ini
   sed -i -e "s/{ID}/$cid/g" inventory.ini
+  sed -i -e "s/{RAM}/512/g" Vagrantfile
 
   vagrant up
 
@@ -237,6 +260,16 @@ function productionEnvironment() {
 
 function error() {
     echo "An error has occured."
+    exit
+}
+
+function errorAccount() {
+    echo "This account does not exist"
+    exit
+}
+
+function errorConfig() {
+    echo "No existing environment available to reconfigure."
     exit
 }
 
