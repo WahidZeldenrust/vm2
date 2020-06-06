@@ -112,33 +112,74 @@ function updateEnvironment() {
 
     if [ $reconfigure == 1 ]
     then
-        cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || errorConfig
+        cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || errorConfig
         echo "What would you like to edit?
-        (1) VM name (2) Ram"
+        (1) Ram (2) VM Name"
         read edit
 
         if [ $edit == 1 ]
         then
-          echo "How much ram would you like to give in mb? It must be lower than 1024"
-          read answer
-
-          if [ $answer -lt 1024 ]
-          then
-            vagrant halt
-            sed -i -e "s/{RAM}/$answer/g" Vagrantfile
-            vagrant reload
-          else
-            error
-          fi
+          ramEdit
+        elif [ $edit == 2 ]
+        then
+          hostnameEdit
         fi
 
     elif [ $reconfigure == 2 ]
     then
-        cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || errorConfig
+        cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || errorConfig
         echo ""
     fi
 
     environment
+}
+
+function ramEdit() {
+  echo "How much ram would you like to give in mb? It must be lower than 1024"
+          read answer
+          if [ $answer -lt 1024 ]
+          then
+            echo "Would you also like to edit the VM name?
+            (1) Yes (2) No"
+            read response
+            if [ $response == 2 ]
+             then
+                vagrant halt
+                sed -i -e "s/{RAM}/$answer/g" Vagrantfile
+                vagrant reload
+              elif [ $response == 1 ]
+              then
+                vagrant halt
+                sed -i -e "s/{RAM}/$answer/g" Vagrantfile
+                hostnameEdit
+            fi
+          else
+            error
+          fi
+    
+}
+
+function hostnameEdit() {
+    echo "What would you like to name your VM?"
+    read name
+
+    vagrant halt
+    sed -i -e "s/{HOSTNAME}/$name/g" Vagrantfile
+
+    echo "Would you also like to edit the ram?
+    (1) Yes (2) No"
+    read response
+
+    if [ $response == 1 ]
+    then
+        ramEdit
+    elif [ $response == 2 ]
+    then
+        vagrant reload
+    fi
+
+
+
 }
 
 function environment() {
@@ -208,6 +249,7 @@ function testEnvironment() {
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
 
   sed -i -e "s/{CUSTOMER_ID}/klant$cid-test-webserver1/g" Vagrantfile
+  sed -i -e "s/{HOSTNAME}/klant$cid-test-webserver1/g" Vagrantfile
   sed -i -e "s/{ID}/192.168.10$cid.2/g" Vagrantfile
   sed -i -e "s/{CUSTOMER_ID}/klant$cid-test-webserver1/g" inventory.ini
   sed -i -e "s/{ID}/$cid/g" inventory.ini
