@@ -106,7 +106,7 @@ function updateEnvironment() {
     clear
 
     echo "Which environment would you like to reconfigure?
-    (1) production (2) test"
+    (1) test (2) production"
 
     read reconfigure
 
