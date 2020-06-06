@@ -14,9 +14,14 @@ WEB="{ID}10"
 WEB2="{ID}11"
 LB="{ID}12"
 DB="{ID}13"
+CAP="{CAP}"
 
 
 Vagrant.configure("2") do |config|
+
+    config.vm.provider "virtualbox" do |vb|
+            vb.customize ["modifyvm", :id, "--cpuexecutioncap", CAP]
+    end
 
   config.ssh.insert_key = false
   config.ssh.private_key_path = ["~/.ssh/id_rsa","~/.vagrant.d/insecure_private_key"]

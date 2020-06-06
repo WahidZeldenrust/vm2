@@ -349,6 +349,27 @@ function productionEnvironment() {
   sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" inventory.ini
   sed -i -e "s/{ID}/$cid/g" inventory.ini
 
+  echo "What tier would you like to use for this environment?
+  (1) Bronze 60% max cpu usage (2) Silver 70% max cpu usage (3) Gold 80% max cpu usage (4) 100% max cpu usage"
+
+  read answer
+
+  if [ $answer == 1 ]
+  then
+    sed -i -e "s/{CAP}/60/g" Vagrantfile
+  elif [ $answer == 2 ]
+  then
+      sed -i -e "s/{CAP}/70/g" Vagrantfile
+  elif [ $answer == 3 ]
+  then
+      sed -i -e "s/{CAP}/80/g" Vagrantfile
+  elif [ $answer == 4 ]
+  then
+      sed -i -e "s/{CAP}/100/g" Vagrantfile
+  else
+      error
+  fi
+
 
   vagrant up
 
