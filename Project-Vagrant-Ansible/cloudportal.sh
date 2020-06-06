@@ -106,7 +106,7 @@ function updateEnvironment() {
     clear
 
     echo "Which environment would you like to reconfigure?
-    (1) test (2) production"
+    (1) test"
 
     read reconfigure
 
@@ -130,11 +130,8 @@ function updateEnvironment() {
         then
           hostnameEdit
         fi
-
-    elif [ $reconfigure == 2 ]
-    then
-        cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || errorConfig
-        echo ""
+    else
+      error
     fi
 
     environment
