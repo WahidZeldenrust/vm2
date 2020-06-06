@@ -29,7 +29,7 @@ function existingCustomer() {
     echo "What is your customerID?"
     read ID
 
-    cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$ID || error
+    cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$ID || echo "This customerID does not exist" | exit
     cid=$ID
 
     environment
@@ -37,6 +37,8 @@ function existingCustomer() {
 }
 
 function rerollEnvironment() {
+    clear
+
     echo "Which environment would you like to reroll?
     (1) production (2) test"
 
@@ -101,6 +103,8 @@ function rerollEnvironment() {
 }
 
 function updateEnvironment() {
+    clear
+
     echo "Which environment would you like to reconfigure?
     (1) production (2) test"
 
@@ -118,6 +122,8 @@ function updateEnvironment() {
 }
 
 function environment() {
+    clear
+
     echo "What would you like to do?
 (1) Make a test environment  (2) Make a production environment  (3) Remove an environment  (4) Reroll an environment (5) Update an environment (6) Quit"
 
@@ -148,7 +154,7 @@ function environment() {
 
 
 function deleteEnvironment() {
-
+    clear
 
     echo "Which environment would you like to remove?
     (1) production (2) test"
@@ -176,6 +182,8 @@ function deleteEnvironment() {
 
 function testEnvironment() {
 
+  clear
+
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/test_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
 
@@ -193,6 +201,8 @@ function testEnvironment() {
 }
 
 function productionEnvironment() {
+
+  clear
 
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/ || error
   rm -rf roles
@@ -226,7 +236,7 @@ function productionEnvironment() {
 }
 
 function error() {
-    echo "A error has occured."
+    echo "An error has occured."
     exit
 }
 
