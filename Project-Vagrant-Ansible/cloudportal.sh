@@ -119,7 +119,7 @@ function updateEnvironment() {
 
         if [ $edit == 1 ]
         then
-          echo "How much ram would you like to give in mb?"
+          echo "How much ram would you like to give in mb? It must be lower than 1024"
           read answer
 
           if [ $answer -lt 1024 ]
@@ -128,9 +128,7 @@ function updateEnvironment() {
             sed -i -e "s/{RAM}/$answer/g" Vagrantfile
             vagrant reload
           else
-            echo "Number must be lower than 1024"
-
-            environment
+            error
           fi
         fi
 
