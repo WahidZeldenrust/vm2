@@ -115,6 +115,10 @@ function updateEnvironment() {
         cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || errorConfig
         rm -rf Vagrantfile
         cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/test_template/Vagrantfile /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test/Vagrantfile
+
+        sed -i -e "s/{CUSTOMER_ID}/klant$cid-test-webserver1/g" Vagrantfile
+        sed -i -e "s/{ID}/192.168.10$cid.2/g" Vagrantfile
+
         echo "What would you like to edit?
         (1) Ram (2) VM Name"
         read edit
