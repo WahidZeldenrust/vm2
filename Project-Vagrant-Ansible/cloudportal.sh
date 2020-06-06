@@ -113,6 +113,8 @@ function updateEnvironment() {
     if [ $reconfigure == 1 ]
     then
         cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || errorConfig
+        rm -rf Vagrantfile
+        cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/test_template/Vagrantfile /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test/Vagrantfile
         echo "What would you like to edit?
         (1) Ram (2) VM Name"
         read edit
@@ -163,18 +165,18 @@ function hostnameEdit() {
     echo "What would you like to name your VM?"
     read name
 
-    vagrant halt
-    sed -i -e "s/{HOSTNAME}/$name/g" Vagrantfile
-
     echo "Would you also like to edit the ram?
     (1) Yes (2) No"
     read response
-
     if [ $response == 1 ]
     then
+        vagrant halt
+        sed -i -e "s/{HOSTNAME}/$name/g" Vagrantfile
         ramEdit
     elif [ $response == 2 ]
     then
+        vagrant halt
+        sed -i -e "s/{HOSTNAME}/$name/g" Vagrantfile
         vagrant reload
     fi
 
