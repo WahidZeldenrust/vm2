@@ -354,6 +354,8 @@ function productionEnvironment() {
 
   read answer
 
+  #This section allows the user to choose the capacity of the machines.
+  #This limits the cpu usage.
   if [ $answer == 1 ]
   then
     sed -i -e "s/{CAP}/60/g" Vagrantfile
