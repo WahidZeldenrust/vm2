@@ -6,16 +6,22 @@ printf "########################################################################
 
 cid=0
 
+#When the user is a new customer the new cutomer function is called
 function newCustomer() {
     echo "Welcome to the cloudportal"
+    #The script navigates to the customer map.
     cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten || exit
 
+    #The ammount of customers are counted.
     customerAmount="$(ls -1 | wc -l)"
+    #A new customer ID is calculated which isnt in use.
     newID=$( echo "$customerAmount + 1" | bc )
 
+    #The directory gets created and the system navigates to it.
     mkdir $"Klant$newID"
     cd $"Klant$newID"
 
+    #This variable now has the new customer ID.
     cid=$newID
 
     clear
@@ -24,11 +30,13 @@ function newCustomer() {
     environment
 }
 
+#When the user is an existing customer the existing cutomer function is called
 function existingCustomer() {
     echo "You are a customer"
     echo "What is your customerID?"
     read ID
 
+    #The script navigates to the location of the customer if its available. If it doesnt exist, an error occurs.
     cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$ID || errorAccount
     cid=$ID
 
@@ -36,6 +44,7 @@ function existingCustomer() {
 
 }
 
+#When an exisiting user chooses to reroll an environment. The rerollenvironment is called.
 function rerollEnvironment() {
     clear
 
@@ -44,29 +53,39 @@ function rerollEnvironment() {
 
     read reroll
 
+    #If the user chooses 1, the system will navigate to the producrtion environment. If there is non, an error occurs.
     if [ $reroll == 1 ]
     then
       cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || error
       vagrant reload
       vagrant up
 
+      #Clean config files are coppied to the roles location.
       cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/ || error
       rm -rf roles
-      cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/roles_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles
+      cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/templates/roles_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles
 
+      #The config files are edited with the right information before deploting the playbook.
       cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/database/tasks || error
+      #In the mysql_config.yml file, the right ip addresses are added for connection allowance.
       sed -i -e "s/{ID}/$cid/g" mysql_config.yml
 
+      #In the haproxy.cfg.j2 file, the right ip addresses for loadbalancing.
       cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/loadbalancer/templates || error
       sed -i -e "s/{ID}/$cid/g" haproxy.cfg.j2
       sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" haproxy.cfg.j2
 
+      #In the index.php.j2 files the ip address is changed to the right database IP.
       cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/webservers/templates || error
       sed -i -e "s/{ID}/$cid/g" index.php.j2
 
-      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/prod_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production
+      #The script tries to navigate to the right production map, if it does not exist, the prodcuction map is created.
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/templates/prod_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production
+      #The script tries to navigate to the right production map. If it still doesnt exist an error occurs.
       cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || error
 
+      #The vagrant and inventory.init files are eddited. The ip adresses of the machines are added and the machine get the right ip address in the right
+      #range for the customer. The right machine name is also added.
       sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" Vagrantfile
       sed -i -e "s/{ID}/192.168.10$cid./g" Vagrantfile
       sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" inventory.ini
@@ -76,16 +95,20 @@ function rerollEnvironment() {
 
       environment
 
-
+    #If the user chooses 2, the system will navigate to the test environment. If there is non, an error occurs.
     elif [ $reroll == 2 ]
     then
       cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
       vagrant reload
       vagrant up
 
-      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/test_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test
+      #The script tries to navigate to the right test map, if it does not exist, the test map is created.
+      cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/templates/test_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test
+      #The script tries to navigate to the right test map. If it still doesnt exist an error occurs.
       cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
 
+      #The vagrant and inventory.init files are eddited. The ip adresses of the machines are added and the machine get the right ip address in the right
+      #range for the customer. The right machine name is also added.
       sed -i -e "s/{CUSTOMER_ID}/klant$cid-test-webserver1/g" Vagrantfile
       sed -i -e "s/{ID}/192.168.10$cid.2/g" Vagrantfile
       sed -i -e "s/{CUSTOMER_ID}/klant$cid-test-webserver1/g" inventory.ini
@@ -102,6 +125,7 @@ function rerollEnvironment() {
     environment
 }
 
+#When an exisiting user chooses to update the test environment. The updateEnvironment function is called.
 function updateEnvironment() {
     clear
 
@@ -110,12 +134,15 @@ function updateEnvironment() {
 
     read reconfigure
 
+    #If the user chooses 1, the script navigates to the right location.
     if [ $reconfigure == 1 ]
     then
         cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || errorConfig
         rm -rf Vagrantfile
-        cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/test_template/Vagrantfile /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test/Vagrantfile
+        #A clean vagrantfile is added.
+        cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/templates/test_template/Vagrantfile /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test/Vagrantfile
 
+        #The right information is added.
         sed -i -e "s/{CUSTOMER_ID}/klant$cid-test-webserver1/g" Vagrantfile
         sed -i -e "s/{ID}/192.168.10$cid.2/g" Vagrantfile
 
@@ -137,6 +164,7 @@ function updateEnvironment() {
     environment
 }
 
+#This is where the ram gets edited for the test environment.
 function ramEdit() {
   echo "How much ram would you like to give in mb? It must be lower than 1024"
           read answer
@@ -147,13 +175,17 @@ function ramEdit() {
             read response
             if [ $response == 2 ]
              then
+               #De machine shutdown so that the information can be updated.
                 vagrant halt
                 sed -i -e "s/{RAM}/$answer/g" Vagrantfile
+                #System reloads.
                 vagrant reload
               elif [ $response == 1 ]
               then
+                #De machine shutdown so that the information can be updated.
                 vagrant halt
                 sed -i -e "s/{RAM}/$answer/g" Vagrantfile
+                #The hostnameEdit function is called.
                 hostnameEdit
             fi
           else
@@ -171,13 +203,18 @@ function hostnameEdit() {
     read response
     if [ $response == 1 ]
     then
+        #De machine shutdown so that the information can be updated.
         vagrant halt
         sed -i -e "s/{HOSTNAME}/$name/g" Vagrantfile
+
+        #The ramEdit function is called.
         ramEdit
     elif [ $response == 2 ]
     then
+        #De machine shutdown so that the information can be updated.
         vagrant halt
         sed -i -e "s/{HOSTNAME}/$name/g" Vagrantfile
+        #System reloads.
         vagrant reload
     fi
 
@@ -185,14 +222,16 @@ function hostnameEdit() {
 
 }
 
+#environment is a function that leads the whole script.
 function environment() {
     clear
-
+    #this is where a choice is made, what the user wants to do.
     echo "What would you like to do?
 (1) Make a test environment  (2) Make a production environment  (3) Remove an environment  (4) Reroll an environment (5) Update an environment (6) Quit"
 
     read environment
 
+    #Depending on the answer the statements sends the program to the right function.
     if [ $environment == 1 ]
     then
       testEnvironment
@@ -216,7 +255,7 @@ function environment() {
     fi
 }
 
-
+#In this function the environment gets removed and deleted.
 function deleteEnvironment() {
     clear
 
@@ -227,12 +266,16 @@ function deleteEnvironment() {
 
     if [ $delete == 1 ]
     then
+      #After choosing to remove the production. The code navigates to the production map and removes the directory including subdirectories.
+      #Vagrant also destroys the machine/machines.
       cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || error
       vagrant destroy -f
       cd ..
       rm -rf production
     elif [ $delete == 2 ]
     then
+      #After choosing to remove the production. The code navigates to the test map and removes the directory including subdirectories.
+      #Vagrant also destroys the machine/machines.
       cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
       vagrant destroy -f
       cd ..
@@ -240,15 +283,16 @@ function deleteEnvironment() {
     else
       error
     fi
-
     environment
 }
+
+
 
 function testEnvironment() {
 
   clear
 
-  cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/test_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test
+  cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/templates/test_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
 
   sed -i -e "s/{CUSTOMER_ID}/klant$cid-test-webserver1/g" Vagrantfile
@@ -272,7 +316,7 @@ function productionEnvironment() {
 
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/ || error
   rm -rf roles
-  cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/roles_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles
+  cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/templates/roles_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles
 
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/database/tasks || error
   sed -i -e "s/{ID}/$cid/g" mysql_config.yml
@@ -301,21 +345,23 @@ function productionEnvironment() {
 
 }
 
+#This function is called when there is an error.
 function error() {
     echo "An error has occured."
     exit
 }
-
+#This function is called when there is an error.
 function errorAccount() {
     echo "This account does not exist"
     exit
 }
-
+#This function is called when there is an error.
 function errorConfig() {
     echo "No existing environment available to reconfigure."
     exit
 }
 
+#The start functions asks for response.
 function start() {
     echo "Are you an existing customer?
 (Y) I am (N) I am a new customer"
@@ -325,10 +371,13 @@ read customer
 
 if [ $customer == "Y" ] || [ $customer == "y" ]
 then
+    #If it is an existing customer, the existing customer function is called.
     existingCustomer
 else
+    #If it isnt an existing customer, the new customer function is called.
     newCustomer
 fi
 }
 
+#This is where the start function is called.
 start
