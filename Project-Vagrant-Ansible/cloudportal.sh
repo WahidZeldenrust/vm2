@@ -287,14 +287,16 @@ function deleteEnvironment() {
 }
 
 
-
+#In this function the test environment gets created.
 function testEnvironment() {
 
   clear
-
+  #The script tries to navigate to the right test map, if it does not exist, the test map is created.
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/templates/test_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test
+  #The script tries to navigate to the right test map, if it still does not exist, an error occurs.
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/test || error
 
+  #The users ip range and name is added to the vagrant and inventory file.
   sed -i -e "s/{CUSTOMER_ID}/klant$cid-test-webserver1/g" Vagrantfile
   sed -i -e "s/{HOSTNAME}/klant$cid-test-webserver1/g" Vagrantfile
   sed -i -e "s/{ID}/192.168.10$cid.2/g" Vagrantfile
@@ -310,27 +312,38 @@ function testEnvironment() {
 
 }
 
+#In this function the production environment gets created.
 function productionEnvironment() {
 
   clear
 
+  #Clean config files are coppied to the roles location.
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/ || error
   rm -rf roles
+  #The script first makes sure that a clean roles configuration is used.
   cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/templates/roles_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles
 
+  #The config files are edited with the right information before deploying the playbook.
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/database/tasks || error
+  #In the mysql_config.yml file, the right ip addresses are added for connection allowance.
   sed -i -e "s/{ID}/$cid/g" mysql_config.yml
 
+  #In the haproxy.cfg.j2 file, the right ip addresses for loadbalancing.
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/loadbalancer/templates || error
   sed -i -e "s/{ID}/$cid/g" haproxy.cfg.j2
   sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" haproxy.cfg.j2
 
+  #In the index.php.j2 files the ip address is changed to the right database IP.
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/playbooks/roles/webservers/templates || error
   sed -i -e "s/{ID}/$cid/g" index.php.j2
 
+  #The script tries to navigate to the right production map, if it does not exist, the prodcuction map is created.
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || cp -rf /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/prod_template /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production
+  #The script tries to navigate to the right production map. If it still doesnt exist an error occurs.
   cd /media/vagrant/vm2/vm/vm2/Project-Vagrant-Ansible/Klanten/Klant$cid/production || error
 
+  #The vagrant and inventory.init files are eddited. The ip adresses of the machines are added and the machine get the right ip address in the right
+  #range for the customer. The right machine name is also added.
   sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" Vagrantfile
   sed -i -e "s/{ID}/192.168.10$cid./g" Vagrantfile
   sed -i -e "s/{CUSTOMER_ID}/klant$cid/g" inventory.ini
